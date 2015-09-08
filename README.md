@@ -1,2 +1,2 @@
 # eventmgr
-django event manager app
+A Django event and contacts manager

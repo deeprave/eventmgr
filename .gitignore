@@ -55,3 +55,55 @@ docs/_build/
 
 # PyBuilder
 target/
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+# Complexity
+output/*.html
+output/*/index.html
+
+# Sphinx
+docs/_build
+
+.webassets-cache
+
+# Virtualenvs
+env
+env*
+venv
+
+# intellij/pycharm
+.idea
+*.ipr
+*.iml
+*.iws
+
+# Mac crap
+.DS_Store
+
+# node
+node_modules/
+
+# bower packages
+eventmgr/assets-src/vendor/
+.sass-cache/
+
+# db
+db.sqlite3
+
+# development key
+.secret-key
+
+# icon editor project
+*.iconsproj
+

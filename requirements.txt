@@ -1,0 +1,4 @@
+Django==1.8.4
+django-enumfield==1.2.1
+django-factory-boy==0.1.6
+factory-boy==2.5.2

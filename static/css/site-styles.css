@@ -1,0 +1,22 @@
+
+.errorlist {
+    color: darkred;
+}
+
+.toolbar {
+    height: 16px;
+}
+
+.contact-list {
+    background: #f4f4f8;
+}
+
+.contact-list:hover {
+    background: #f0f0f8;
+}
+
+.contact-detail {
+    outline: 1px solid lightgrey;
+    padding-top: 0;
+    padding-bottom: 0;
+}

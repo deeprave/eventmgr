@@ -1,0 +1,91 @@
+{% extends 'contacts/contact_base.html' %}
+{% block contacts_content %}
+        <div class="row">
+            <div class="col-sm-11">
+                <h1>Contacts Manager</h1>
+            </div>
+            <div class="col-sm-1">
+                <h1><a href="{% url 'contacts_new' %}" class="btn btn-md btn-primary pull-right" role="button">New Contact</a></h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="nav nav-stacked" id="accordion1">
+                {% for contact in object_list %}
+                <div class="panel panel" style="margin-bottom: 0;">
+
+                    <div class="row panel-heading contact-list">
+                        <div class="col-xs-10">
+                            <a data-toggle="collapse" data-parent="#accordion1" href="#contact_{{ contact.id }}">{{ contact.name }}</a>
+                        </div>
+                        <div class="col-xs-1">
+                            <a href="{% url 'contacts_delete' pk=contact.id %}">
+                            <span class="glyphicon glyphicon-remove" title="Delete this contact"></span></a>
+                        </div>
+                        <div class="col-xs-1">
+                            <a href="{% url 'contacts_edit' pk=contact.id %}">
+                            <span class="glyphicon glyphicon-edit" title="Edit this contact"></span></a>
+                        </div>
+                    </div>
+
+                    <!-- tools bar -->
+                    <div id="contact_{{ contact.id }}" class="panel-body contact-detail collapse">
+
+                        <div class="row thinrow toolbar">
+                            <div class="col-xs-9"></div>
+                            <div class="col-xs-1">
+                                <a href="{% url 'contacts_add_address' contact=contact.id %}">
+                                <span class="glyphicon glyphicon-map-marker" title="Add address"></span></a>
+                            </div>
+                            <div class="col-xs-1">
+                                <a href="{% url 'contacts_add_phone' contact=contact.id %}">
+                                <span class="glyphicon glyphicon-earphone" title="Add phone number"></span></a>
+                            </div>
+                            <div class="col-xs-1">
+                                <a href="{% url 'contacts_add_email' contact=contact.id %}">
+                                <span class="glyphicon glyphicon-envelope" title="Add address"></span></a>
+                            </div>
+                        </div><!-- tools bar -->
+
+                {% if contact.addresses %}
+                    {% for address in contact.addresses_set.all %}
+                        <div class="row">
+                            <div class="col-md-6">
+                        {% if address.title %}
+                                {{ address.title }}<br>
+                        {% endif %}
+                                {{ address.address_1 }}
+                        {% if address.address_2 %}
+                                <br>{{ address.address_2 }}
+                        {% endif %}
+                                <br>{{ address.locality.name }}
+                                {{ address.locality.state.abbrev }}
+                                {{ address.locality.state.country.abbrev }}
+                                {{ address.locality.postcode }}
+                            </div>
+                        </div>
+                            {% endfor %}
+                        {% endif %}
+
+                {% if contact.phones %}
+                    {% for phone in contact.phones_set.all %}
+                        <div class="row">
+                            <div class="col-md-2">
+                                {{ phone.phone_type }} {{ phone.phone_number }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if contact.emails %}
+                {% endif %}
+
+                    </div>
+
+                </div>
+                {% empty %}
+                <div class="panel">No contacts yet.</div>
+                {% endfor %}
+            </div>
+        </div>
+{% endblock %}
+{% debug %}
