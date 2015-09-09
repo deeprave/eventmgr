@@ -16,8 +16,8 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-ALLOWED_HOSTS = ['localhost']
+DEBUG = False
+ALLOWED_HOSTS = ['deeprave-heroku-632.herokuapp.com']
 
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 if SECRET_KEY is None:
@@ -83,6 +83,12 @@ DATABASES = {
     }
 }
 
+import dj_database_url
+DATABASE = {
+    'default': dj_database_url.config(default='sqlite:///{}'.format(DATABASES['default']['NAME']))
+}
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -105,3 +111,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
