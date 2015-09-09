@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-ALLOWED_HOSTS = ['deeprave-heroku-632.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', 'deeprave-heroku-632.herokuapp.com']
 
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 if SECRET_KEY is None:
