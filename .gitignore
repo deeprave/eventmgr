@@ -102,10 +102,7 @@ eventmgr/assets-src/vendor/
 db.sqlite3
 
 # development key
-.secret-key
+.secret-key*
 
 # icon editor project
 *.iconsproj
-
-# fixture data used for once-off importing
-location-fixture.json

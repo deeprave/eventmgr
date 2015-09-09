@@ -84,7 +84,7 @@ DATABASES = {
 }
 
 import dj_database_url
-DATABASE = {
+DATABASES = {
     'default': dj_database_url.config(default='sqlite:///{}'.format(DATABASES['default']['NAME']))
 }
 
