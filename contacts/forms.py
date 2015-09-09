@@ -34,11 +34,10 @@ class AddressForm(BootstrapForm):
 
     class Meta:
         model = Address
-        fields = ['type', 'address_1', 'address_2', 'locality', 'title', 'contact_name']
+        fields = ['type', 'address_1', 'address_2', 'locality', 'title']
         labels = {
             'type': 'Address Type',
             'title': 'Address Name',
-            'contact_name': 'Address Contact'
         }
         help_texts = {
             'type': 'Select an appropriate address type',
@@ -46,7 +45,6 @@ class AddressForm(BootstrapForm):
             'address_2': 'Enter second address line (optional)',
             'locality': 'Select the address locality',
             'title': 'Enter an optional name for this address or leave blank',
-            'contact_name': 'Enter an optional contact name for this address',
         }
 
 

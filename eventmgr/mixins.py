@@ -27,3 +27,4 @@ class UpdateViewLogin(LoginRequiredMixin, UpdateView):
 
 class DeleteViewLogin(LoginRequiredMixin, DeleteView):
     pass
+

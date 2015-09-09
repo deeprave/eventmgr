@@ -9,6 +9,8 @@
 
 .contact-list {
     background: #f4f4f8;
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
 
 .contact-list:hover {

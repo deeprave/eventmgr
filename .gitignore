@@ -107,3 +107,5 @@ db.sqlite3
 # icon editor project
 *.iconsproj
 
+# fixture data used for once-off importing
+location-fixture.json
