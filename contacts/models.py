@@ -1,6 +1,4 @@
 from django.db import models
-from .enums import AddressType, PhoneType
-from django_enumfield import enum
 
 """ Basic address book tables """
 
@@ -8,13 +6,13 @@ from django_enumfield import enum
 TITLE_CHOICES = (
     # common
     (None, 'None'),
-    ('Mr.', 'MR'), ('Miss', 'MISS'), ('Ms.', 'MS'), ('Mrs.', 'MRS'),
+    ('Mr.', 'Mr'), ('Miss', 'Miss'), ('Ms.', 'Ms'), ('Mrs.', 'Mrs'),
     # less common
-    ('Dr.', 'DR'), ('Prof.', 'PROF'), ('Rev.', 'REV'),
+    ('Dr.', 'Dr'), ('Prof.', 'Prof'), ('Rev.', 'Rev'),
     # military
-    ('Lt.', 'LT'), ('Cpt.', 'CPT'), ('Maj.', 'MAJ'), ('Gen.', 'GEN'),
+    ('Lt.', 'Lt'), ('Cpt.', 'Cpt'), ('Maj.', 'Maj'), ('Gen.', 'Gen'),
     # rare
-    ('Esq', 'ESQ'), ('Sr.', 'SR'), ('Jr.', 'JR'), ('Hon.', 'HON'), ('Rt. Hon.', 'RT HON')
+    ('Esq', 'Esq'), ('Sr.', 'Sr'), ('Jr.', 'Jr'), ('Hon.', 'Hon'), ('Rt. Hon.', 'Rt Hon')
 )
 
 
@@ -23,15 +21,6 @@ class Contact(models.Model):
     nick = models.CharField(blank=True, null=True, max_length=64)
     company = models.BooleanField(default=False)
     title = models.CharField(blank=True, null=True, max_length=16, choices=TITLE_CHOICES)
-
-    def get_addresses(self):
-        return Address.objects.filter(contact=self)
-
-    def get_phonenumbers(self):
-        return PhoneNumber.objects.filter(contact=self)
-
-    def get_emails(self):
-        return Email.objects.filter(contact=self)
 
     def __str__(self):
         return self.name
@@ -70,15 +59,30 @@ class Locality(models.Model):
     postcode = models.CharField(max_length=8)
 
     def __str__(self):
-        return "%s (%s)" % (self.name, self.state.name)
+        return "%s (%s)" % (self.name, self.state.abbrev)
 
     class Meta:
         ordering = ('name', 'state')
         verbose_name_plural = 'localities'
 
 
+ADDRESS_TYPES = (
+    (None, 'Unspecified'),
+    ('Home', 'Home'),
+    ('Work', 'Work'),
+    ('Main', 'Main'),
+    ('Branch', 'Branch'),
+    ('Mailing', 'Mail'),
+    ('Billing', 'Billing'),
+    ('Legal', 'Legal'),
+    ('Campus', 'Campus'),
+    ('Dormitory', 'Dormitory'),
+    ('Other', 'Other'),
+)
+
+
 class Address(models.Model):
-    type = enum.EnumField(AddressType)
+    type = models.CharField(max_length=16, choices=ADDRESS_TYPES, null=True, blank=True)
     locality = models.ForeignKey(Locality)
     contact = models.ForeignKey(Contact, null=True)
     title = models.CharField(blank=True, null=True, max_length=254)
@@ -95,7 +99,18 @@ class Address(models.Model):
         verbose_name_plural = 'addresses'
 
 
+EMAIL_TYPES = (
+    (None, 'Unspecified'),
+    ('Home', 'Home'),
+    ('Work', 'Work'),
+    ('Campus', 'Campus'),
+    ('Dormitory', 'Dormitory'),
+    ('Other', 'Other'),
+)
+
+
 class Email(models.Model):
+    type = models.CharField(max_length=16, choices=EMAIL_TYPES, null=True, blank=True)
     contact = models.ForeignKey(Contact, null=True)
     address = models.EmailField(blank=False)
 
@@ -115,12 +130,23 @@ class Email(models.Model):
         return self.address
 
 
+PHONE_TYPES = (
+    (None, 'Unspecified'),
+    ('Home', 'Home'),
+    ('Work', 'Work'),
+    ('Main', 'Main'),
+    ('A/H', 'After Hours'),
+    ('Campus', 'Campus'),
+    ('Dormitory', 'Dormitory'),
+    ('Other', 'Other'),
+)
+
+
 class PhoneNumber(models.Model):
+    type = models.CharField(max_length=16, choices=PHONE_TYPES, null=True, blank=True)
     contact = models.ForeignKey(Contact, null=True)
-    phone_type = enum.EnumField(PhoneType)
-    phone_number = models.CharField(max_length=32)
+    number = models.CharField(max_length=32)
 
     def __str__(self):
         return self.phone_number
-
 

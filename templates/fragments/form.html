@@ -1,4 +1,15 @@
-<form method="post" role="form">{% csrf_token %}
+<form method="post" role="form">
+    {% csrf_token %}
+{% if form.management_form %}
+    {{ form.management_form }}
+    {% for sub_form in form %}
+        <ul>
+            {{ sub_form.as_ul }}
+        </ul>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </fieldset>
+{% else %}
     <fieldset>
         <legend>{{ title }}</legend>
     {% for field in form %}
@@ -22,4 +33,5 @@
     {% endfor %}
     <button type="submit" class="btn btn-primary">Submit</button
     </fieldset>
+{% endif %}
 </form>

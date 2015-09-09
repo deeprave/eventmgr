@@ -8,22 +8,31 @@
                 <h1><a href="{% url 'contacts_new' %}" class="btn btn-md btn-primary pull-right" role="button">New Contact</a></h1>
             </div>
         </div>
+    {% if messages %}
+        <div class="row messages">
+        {% for message in messages %}
+            <div class="panel-body text-center">
+                <div class="col-xs-10 message {{ message.tags }}">{{ message }}</div>
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
         <div class="row">
             <div class="nav nav-stacked" id="accordion1">
                 {% for contact in object_list %}
-                <div class="panel panel" style="margin-bottom: 0;">
+                <div class="panel" style="margin: 0;">
 
                     <div class="row panel-heading contact-list">
+                        <a data-toggle="collapse" data-parent="#accordion1" href="#contact_{{ contact.id }}">
                         <div class="col-xs-10">
                     {% if contact.company %}
                             <span class="glyphicon glyphicon-briefcase" title="This contact is a company"></span>&nbsp;
                     {% else %}
                             <span class="glyphicon glyphicon-user" title="This contact is a person"></span>&nbsp;
                     {% endif %}
-                            <a data-toggle="collapse" data-parent="#accordion1" href="#contact_{{ contact.id }}">
                                 {{ contact.name }}
-                            </a>
                         </div>
+                            </a>
                         <div class="col-xs-1">
                             <a href="{% url 'contacts_delete' pk=contact.id %}">
                             <span class="glyphicon glyphicon-remove" title="Delete this contact"></span></a>
@@ -37,63 +46,81 @@
                     <!-- tools bar -->
                     <div id="contact_{{ contact.id }}" class="panel-body contact-detail collapse">
 
-                        <div class="row thinrow toolbar">
-                            <div class="col-xs-9"></div>
-                            <div class="col-xs-1">
-                                <a href="{% url 'contacts_add_address' contact=contact.id %}">
-                                <span class="glyphicon glyphicon-map-marker" title="Add address"></span></a>
-                            </div>
-                            <div class="col-xs-1">
-                                <a href="{% url 'contacts_add_phone' contact=contact.id %}">
-                                <span class="glyphicon glyphicon-earphone" title="Add phone number"></span></a>
-                            </div>
-                            <div class="col-xs-1">
-                                <a href="{% url 'contacts_add_email' contact=contact.id %}">
-                                <span class="glyphicon glyphicon-envelope" title="Add address"></span></a>
-                            </div>
-                        </div><!-- tools bar -->
-
-                    {% for address in contact.get_addresses %}
                         <div class="row">
-                            <div class="col-md-6">
+
+                            <div class="col-md-8 address">
+                                <a href="{% url 'contacts_address' pk=contact.id %}">
+                                    <div class="row toolbar text-center">
+                                        <span class="glyphicon glyphicon-map-marker pull-right" title="Edit addresses"></span>
+                                        Address
+                                    </div>
+                                </a>
+                    {% for address in contact.address_set.all %}
+                        {% if address.type %}
+                            [{{ address.type }}]
+                        {% endif %}
                         {% if address.title %}
-                                {{ address.title }}<br>
+                            {{ address.title }}<br>
                         {% endif %}
-                                {{ address.address_1 }}
+                            {{ address.address_1 }},
                         {% if address.address_2 %}
-                                <br>{{ address.address_2 }}
+                            {{ address.address_2 }}
                         {% endif %}
-                                <br>{{ address.locality.name }}
-                                {{ address.locality.state.abbrev }}
-                                {{ address.locality.state.country.abbrev }}
-                                {{ address.locality.postcode }}
-                            </div>
-                        </div>
+                            {{ address.locality.name }}
+                            {{ address.locality.state.abbrev }}
+                            {{ address.locality.state.country.abbrev }}
+                            {{ address.locality.postcode }}<br>
                     {% endfor %}
-
-                    {% for phone in contact.get_phonenumbers %}
-                        <div class="row">
-                            <div class="col-md-2">
-                                {{ phone.phone_type }} {{ phone.phone_number }}
                             </div>
-                        </div>
-                    {% endfor %}
 
-                    {% for email in contact.get_emails %}
-                        <div class="row">
-                            <div class="col-md-2">
+                            <div class="col-md-2 phone">
+                                <a href="{% url 'contacts_phonenumber' pk=contact.id %}">
+                                    <div class="row toolbar text-center">
+                                        <span class="glyphicon glyphicon-earphone pull-right" title="Edit phone numbers"></span>
+                                        Phone
+                                    </div>
+                                </a>
+                    {% for phone in contact.phonenumber_set.all %}
+                                {% if phone.type %}{{ phone.type }} {% endif %}{{ phone.number }}<br>
+                    {% endfor %}
+                            </div>
+
+                            <div class="col-md-2 email">
+                                <a href="{% url 'contacts_email' pk=contact.id %}">
+                                    <div class="row toolbar text-center">
+                                        <span class="glyphicon glyphicon-envelope pull-right" title="Edit email addresses"></span>
+                                        Email
+                                    </div>
+                                </a>
+                    {% for email in contact.email_set.all %}
                                 {{ email.address }}
+                    {% endfor %}
                             </div>
                         </div>
-                    {% endfor %}
 
                     </div>
 
                 </div>
                 {% empty %}
-                <div class="panel">No contacts yet.</div>
+                <div class="panel">No contacts found.</div>
                 {% endfor %}
             </div>
         </div>
+    {% if is_paginated %}
+        <div class="row panel paginator">
+            <span class="page-links">
+        {% if page_obj.has_previous %}
+            <a href="{% url 'contacts' %}?page={{ page_obj.previous_page_number }}">
+                <span class="glyphicon glyphicon-arrow-left" title="Previous Page"></span>
+            </a>
+        {% endif %}
+                <span class="page-current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+            <a href="{% url 'contacts' %}?page={{ page_obj.next_page_number }}">
+                <span class="glyphicon glyphicon-arrow-right" title="Next Page"></span>
+            </a>
+        {% endif %}
+            </span>
+        </div>
+    {% endif %}
 {% endblock %}
-{% debug %}

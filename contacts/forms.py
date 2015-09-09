@@ -1,4 +1,4 @@
-from django.forms import models
+from django.forms import models, inlineformset_factory
 from .models import Contact, Address, Email, PhoneNumber
 
 
@@ -37,7 +37,7 @@ class AddressForm(BootstrapForm):
         fields = ['type', 'address_1', 'address_2', 'locality', 'title']
         labels = {
             'type': 'Address Type',
-            'title': 'Address Name',
+            'title': 'Address Label',
         }
         help_texts = {
             'type': 'Select an appropriate address type',
@@ -48,29 +48,40 @@ class AddressForm(BootstrapForm):
         }
 
 
+ContactAddressFormSet = inlineformset_factory(Contact, Address, form=AddressForm)
+
+
 class EmailForm(BootstrapForm):
 
     class Meta:
         model = Email
-        fields = ['address']
+        fields = ['type', 'address']
         labels = {
+            'type': 'Email Type',
             'address': 'Email Address'
         }
         help_texts = {
+            'type': 'Select a type that describes the email address',
             'address': 'Contact\'s email address in username@domain format'
         }
+
+
+ContactEmailFormSet = inlineformset_factory(Contact, Email, form=EmailForm)
 
 
 class PhoneForm(BootstrapForm):
 
     class Meta:
         model = PhoneNumber
-        fields = ['phone_type', 'phone_number']
+        fields = ['type', 'number']
         labels = {
-            'phone_type': 'Type',
-            'phone_number': 'Phone Number'
+            'type': 'Phone Type',
+            'number': 'Phone Number'
         }
         help_texts = {
-            'phone_type': 'Select an appropriate phone number type',
-            'phone_number': 'Enter the phone number (localised or with +country prefix)',
+            'type': 'Select an appropriate phone number type',
+            'number': 'Enter the phone number (localised or with +country prefix)',
         }
+
+
+ContactPhoneFormSet = inlineformset_factory(Contact, PhoneNumber, form=PhoneForm)
