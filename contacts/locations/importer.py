@@ -28,21 +28,21 @@ def state_for_postcode(country, postcode, locality):
     if country == 'AU':
         """ Australian states """
         if 800 <= postcode < 900:
-            return 'NT'
+            return None # 'NT'
         if (2600 <= postcode < 2618) or (2900 <= postcode < 2915):
-            return 'ACT'     # arggh
+            return None # 'ACT'     # arggh
         if 2000 <= postcode < 3000:
-            return 'NSW'
+            return None # 'NSW'
         if 3000 <= postcode < 4000:
             return 'VIC'
         if 4000 <= postcode < 5000:
-            return 'QLD'
+            return None # 'QLD'
         if 5000 <= postcode < 6000:
-            return 'SA'
+            return None # 'SA'
         if 6000 <= postcode < 7000:
-            return 'WA'
+            return None # 'WA'
         if 7000 <= postcode < 8000:
-            return 'TAS'
+            return None # 'TAS'
         if 9000 <= postcode < 10000:
             return None  # special cases, not important for us
     else:
