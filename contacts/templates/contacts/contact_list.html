@@ -48,7 +48,7 @@
 
                         <div class="row">
 
-                            <div class="col-md-8 address">
+                            <div class="col-md-7 address">
                                 <a href="{% url 'contacts_address' pk=contact.id %}">
                                     <div class="row toolbar text-center">
                                         <span class="glyphicon glyphicon-map-marker pull-right" title="Edit addresses"></span>
@@ -85,7 +85,7 @@
                     {% endfor %}
                             </div>
 
-                            <div class="col-md-2 email">
+                            <div class="col-md-3 email">
                                 <a href="{% url 'contacts_email' pk=contact.id %}">
                                     <div class="row toolbar text-center">
                                         <span class="glyphicon glyphicon-envelope pull-right" title="Edit email addresses"></span>
