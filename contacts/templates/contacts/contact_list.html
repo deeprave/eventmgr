@@ -124,3 +124,38 @@
         </div>
     {% endif %}
 {% endblock %}
+{% block javascript %}
+<script type="text/javascript">
+    $(this).autocomplete({
+
+      source: function(request, response) {
+        $.ajax({
+          url: '@Url.Content("~/Employee/SearchEmployee")/',
+          type: 'POST',
+          contentType: 'application/json',
+          dataType: "json",
+          data: JSON.stringify({
+              employerId: 1,
+              searchStr: me.val()
+          }),
+          success: function(data) {
+            if (data.success) {
+
+              response($.map(data.data, function(item) {
+
+                return {
+                  label: "(" + item.EmployeeNumber + ") " +
+                               item.FirstName + " " +
+                               item.MothersLast + ", " +
+                               item.FathersLast,
+                  employeeId: item.EmployeeId
+                }
+              }));
+            }
+          }
+        });
+      },
+      minLength: 3
+    });
+</script>
+{% endblock %}

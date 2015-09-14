@@ -1,34 +1,34 @@
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.urlresolvers import reverse_lazy
-from eventmgr.mixins import ListViewLogin, CreateViewLogin, UpdateViewLogin, DeleteViewLogin
-from .models import Contact
-from .forms import ContactForm, ContactAddressFormSet, ContactPhoneFormSet, \
-    ContactEmailFormSet
+from eventmgr import mixins
+
+from . import models
+from . import forms
 
 
-class ContactListView(ListViewLogin):
-    model = Contact
+class ContactListView(mixins.ListViewLogin):
+    model = models.Contact
     paginate_by = 25
 
 
-class ContactCreateView(SuccessMessageMixin, CreateViewLogin):
-    model = Contact
-    form_class = ContactForm
+class ContactCreateView(SuccessMessageMixin, mixins.CreateViewLogin):
+    model = models.Contact
+    form_class = forms.ContactForm
     success_url = reverse_lazy('contacts')
     success_message = "Contact '%(name)s' created successfully."
 
 
-class ContactUpdateView(SuccessMessageMixin, UpdateViewLogin):
-    model = Contact
-    form_class = ContactForm
+class ContactUpdateView(SuccessMessageMixin, mixins.UpdateViewLogin):
+    model = models.Contact
+    form_class = forms.ContactForm
     success_url = reverse_lazy('contacts')
     success_message = "Contact '%(name)s' updated successfully."
 
 
-class ContactDeleteView(SuccessMessageMixin, DeleteViewLogin):
-    model = Contact
-    form_class = ContactForm
+class ContactDeleteView(SuccessMessageMixin, mixins.DeleteViewLogin):
+    model = models.Contact
+    form_class = forms.ContactForm
     success_url = reverse_lazy('contacts')
     success_message = "Contact '%(name)s' deleted."
 
@@ -37,27 +37,27 @@ class ContactDeleteView(SuccessMessageMixin, DeleteViewLogin):
         return super().delete(request, *args, **kwargs)
 
 
-class ContactAddressView(UpdateViewLogin):
-    model = Contact
-    form_class = ContactAddressFormSet
+class ContactAddressView(mixins.UpdateViewLogin):
+    model = models.Contact
+    form_class = forms.ContactAddressFormSet
     success_url = reverse_lazy('contacts')
 
     def get_success_url(self):
         return self.success_url
 
 
-class ContactPhoneView(UpdateViewLogin):
-    model = Contact
-    form_class = ContactPhoneFormSet
+class ContactPhoneView(mixins.UpdateViewLogin):
+    model = models.Contact
+    form_class = forms.ContactPhoneFormSet
     success_url = reverse_lazy('contacts')
 
     def get_success_url(self):
         return self.success_url
 
 
-class ContactEmailView(UpdateViewLogin):
-    model = Contact
-    form_class = ContactEmailFormSet
+class ContactEmailView(mixins.UpdateViewLogin):
+    model = models.Contact
+    form_class = forms.ContactEmailFormSet
     success_url = reverse_lazy('contacts')
 
     def get_success_url(self):

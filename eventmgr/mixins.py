@@ -1,13 +1,17 @@
+from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 
 class LoginRequiredMixin(object):
 
-    @classmethod
-    def as_view(cls, **kwargs):
-        view = super(LoginRequiredMixin, cls).as_view(**kwargs)
-        return login_required(view)
+    redirect_field_name = REDIRECT_FIELD_NAME
+    login_url = None
+
+    @method_decorator(login_required(redirect_field_name=redirect_field_name, login_url=login_url))
+    def dispatch(self, request, *args, **kwargs):
+        return super(LoginRequiredMixin, self).dispatch(request, *args, **kwargs)
 
 
 """ derive generic views that have the login_required wrapper """
