@@ -1,128 +1,147 @@
 {% extends 'contacts/contact_base.html' %}
+{% load bootstrap3 %}
+
+            <div class="panel-body">
+                {% include 'fragments/bootstrap_form.html' %}
+            </div>
+        </div>
+    </div>
+
 {% block contacts_content %}
-        <div class="row">
-            <div class="col-xs-10">
+    <div class="row">&nbsp;</div>
+    <div class="row col-sm-10">
+        <div class="panel panel-primary noborder">
+            <div class="row panel-heading">
                 <h1>Contacts Manager</h1>
             </div>
-            <div class="col-xs-2">
-                <h1><a href="{% url 'contacts_new' %}" class="btn btn-md btn-primary pull-right" role="button">New Contact</a></h1>
-            </div>
-        </div>
-    {% if messages %}
-        <div class="row messages">
-        {% for message in messages %}
-            <div class="panel-body text-center">
-                <div class="col-xs-10 message {{ message.tags }}">{{ message }}</div>
-            </div>
-        {% endfor %}
-        </div>
-    {% endif %}
-        <div class="row">
-            <div class="nav nav-stacked" id="accordion1">
-                {% for contact in object_list %}
-                <div class="panel" style="margin: 0;">
-
-                    <div class="row panel-heading contact-list">
-                        <a data-toggle="collapse" data-parent="#accordion1" href="#contact_{{ contact.id }}">
-                        <div class="col-xs-10">
-                    {% if contact.company %}
-                            <span class="glyphicon glyphicon-briefcase" title="This contact is a company"></span>&nbsp;
-                    {% else %}
-                            <span class="glyphicon glyphicon-user" title="This contact is a person"></span>&nbsp;
-                    {% endif %}
-                                {{ contact.name }}
+            <div class="row panel-footer">
+                <div class="col-xl-12 col-sm-8">
+                    <form>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name='name' placeholder="Search...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-md" role="button" type="reset" reset="Search">
+                                    <span class="glyphicon glyphicon-remove" area-hidden="true"></span>
+                                </button>
+                            </span>
+                            <span class="input-group-btn">
+                                <button class="btn btn-md" role="button" type="submit">
+                                    <span class="glyphicon glyphicon-search" area-hidden="true"></span>
+                                </button>
+                            </span>
                         </div>
-                            </a>
-                        <div class="col-xs-1">
-                            <a href="{% url 'contacts_delete' pk=contact.id %}">
-                            <span class="glyphicon glyphicon-remove" title="Delete this contact"></span></a>
-                        </div>
-                        <div class="col-xs-1">
-                            <a href="{% url 'contacts_edit' pk=contact.id %}">
-                            <span class="glyphicon glyphicon-edit" title="Edit this contact"></span></a>
-                        </div>
-                    </div>
-
-                    <!-- tools bar -->
-                    <div id="contact_{{ contact.id }}" class="panel-body contact-detail collapse">
-
-                        <div class="row">
-
-                            <div class="col-md-7 address">
-                                <a href="{% url 'contacts_address' pk=contact.id %}">
-                                    <div class="row toolbar text-center">
-                                        <span class="glyphicon glyphicon-map-marker pull-right" title="Edit addresses"></span>
-                                        Address
-                                    </div>
-                                </a>
-                    {% for address in contact.address_set.all %}
-                        {% if address.type %}
-                            [{{ address.type }}]
-                        {% endif %}
-                        {% if address.title %}
-                            {{ address.title }}<br>
-                        {% endif %}
-                            {{ address.address_1 }},
-                        {% if address.address_2 %}
-                            {{ address.address_2 }}
-                        {% endif %}
-                            {{ address.locality.name }}
-                            {{ address.locality.state.abbrev }}
-                            {{ address.locality.state.country.abbrev }}
-                            {{ address.locality.postcode }}<br>
-                    {% endfor %}
-                            </div>
-
-                            <div class="col-md-2 phone">
-                                <a href="{% url 'contacts_phonenumber' pk=contact.id %}">
-                                    <div class="row toolbar text-center">
-                                        <span class="glyphicon glyphicon-earphone pull-right" title="Edit phone numbers"></span>
-                                        Phone
-                                    </div>
-                                </a>
-                    {% for phone in contact.phonenumber_set.all %}
-                                {% if phone.type %}{{ phone.type }} {% endif %}{{ phone.number }}<br>
-                    {% endfor %}
-                            </div>
-
-                            <div class="col-md-3 email">
-                                <a href="{% url 'contacts_email' pk=contact.id %}">
-                                    <div class="row toolbar text-center">
-                                        <span class="glyphicon glyphicon-envelope pull-right" title="Edit email addresses"></span>
-                                        Email
-                                    </div>
-                                </a>
-                    {% for email in contact.email_set.all %}
-                                {{ email.address }}
-                    {% endfor %}
-                            </div>
-                        </div>
-
-                    </div>
-
+                    </form>
                 </div>
+                <a href="{% url 'contacts_new' %}" class="btn btn-md btn-primary pull-right" role="button">New Contact</a>&nbsp;
+            </div>
+            <div class="row messages">{% bootstrap_messages %}</div>
+            <div class="panel-body">
+                <div class="nav nav-stacked" id="accordion1">
+                {% for contact in object_list %}
+                    <div class="compact">
+                        <div class="col-sm-12 panel panel-default compact">
+                            <div class="row panel-heading">
+                                <a data-toggle="collapse" data-parent="#accordion1" href="#contact_{{ contact.id }}">
+                                    <div class="col-xs-10">
+                                    {% if contact.company %}
+                                        <span class="glyphicon glyphicon-briefcase" title="This contact is a company"></span>&nbsp;
+                                    {% else %}
+                                        <span class="glyphicon glyphicon-user" title="This contact is a person"></span>&nbsp;
+                                    {% endif %}
+                                        {{ contact.title }}
+                                        {{ contact.name }}
+                                    </div>
+                                </a>
+                                <div class="col-xs-1">
+                                    <a href="{% url 'contacts_delete' pk=contact.id %}">
+                                    <span class="glyphicon glyphicon-remove" title="Delete this contact"></span></a>
+                                </div>
+                                <div class="col-xs-1">
+                                    <a href="{% url 'contacts_edit' pk=contact.id %}">
+                                    <span class="glyphicon glyphicon-edit" title="Edit this contact"></span></a>
+                                </div>
+                            </div>
+
+                            <div id="contact_{{ contact.id }}" class="row collapse">
+
+                                <!-- tools bar -->
+                                <div class="row compact">
+                                    <div class="col-md-6 address">
+                                        <a href="{% url 'contacts_address' pk=contact.id %}">
+                                            <div class="row toolbar text-center">
+                                                <span class="glyphicon glyphicon-map-marker pull-right" title="Edit addresses"></span>
+                                                Address
+                                            </div>
+                                        </a>
+                            {% for address in contact.address_set.all %}
+                                {% if address.type %}
+                                    [{{ address.type }}]
+                                {% endif %}
+                                {% if address.title %}
+                                    {{ address.title }}<br>
+                                {% endif %}
+                                    {{ address.address_1 }},
+                                {% if address.address_2 %}
+                                    {{ address.address_2 }}
+                                {% endif %}
+                                    {{ address.locality.name }}
+                                    {{ address.locality.state.abbrev }}
+                                    {{ address.locality.state.country.abbrev }}
+                                    {{ address.locality.postcode }}<br>
+                            {% endfor %}
+                                    </div>
+
+                                    <div class="col-md-3 phone">
+                                        <a href="{% url 'contacts_phonenumber' pk=contact.id %}">
+                                            <div class="row toolbar text-center">
+                                                <span class="glyphicon glyphicon-earphone pull-right" title="Edit phone numbers"></span>
+                                                Phone
+                                            </div>
+                                        </a>
+                            {% for phone in contact.phonenumber_set.all %}
+                                        {% if phone.type %}{{ phone.type }} {% endif %}{{ phone.number }}<br>
+                            {% endfor %}
+                                    </div>
+
+                                    <div class="col-md-3 email">
+                                        <a href="{% url 'contacts_email' pk=contact.id %}">
+                                            <div class="row toolbar text-center">
+                                                <span class="glyphicon glyphicon-envelope pull-right" title="Edit email addresses"></span>
+                                                Email
+                                            </div>
+                                        </a>
+                            {% for email in contact.email_set.all %}
+                                        {{ email.address }}
+                            {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 {% empty %}
-                <div class="panel">No contacts found.</div>
+                    <div class="panel">No contacts found.</div>
                 {% endfor %}
+                </div>
+            {% if is_paginated %}
+                <div class="row panel paginator">
+                    <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="{% url 'contacts' %}?page={{ page_obj.previous_page_number }}">
+                        <span class="glyphicon glyphicon-arrow-left" title="Previous Page"></span>
+                    </a>
+                {% endif %}
+                        <span class="page-current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                {% if page_obj.has_next %}
+                    <a href="{% url 'contacts' %}?page={{ page_obj.next_page_number }}">
+                        <span class="glyphicon glyphicon-arrow-right" title="Next Page"></span>
+                    </a>
+                {% endif %}
+                    </span>
+                </div>
+            {% endif %}
             </div>
         </div>
-    {% if is_paginated %}
-        <div class="row panel paginator">
-            <span class="page-links">
-        {% if page_obj.has_previous %}
-            <a href="{% url 'contacts' %}?page={{ page_obj.previous_page_number }}">
-                <span class="glyphicon glyphicon-arrow-left" title="Previous Page"></span>
-            </a>
-        {% endif %}
-                <span class="page-current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
-        {% if page_obj.has_next %}
-            <a href="{% url 'contacts' %}?page={{ page_obj.next_page_number }}">
-                <span class="glyphicon glyphicon-arrow-right" title="Next Page"></span>
-            </a>
-        {% endif %}
-            </span>
-        </div>
-    {% endif %}
+    </div>
 {% endblock %}
 {% block javascript %}
 <script type="text/javascript">

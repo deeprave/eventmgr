@@ -5,7 +5,7 @@ from django.db import models
 
 TITLE_CHOICES = (
     # common
-    (None, 'None'),
+    (None, 'No Title'),
     ('Mr.', 'Mr'), ('Miss', 'Miss'), ('Ms.', 'Ms'), ('Mrs.', 'Mrs'),
     # less common
     ('Dr.', 'Dr'), ('Prof.', 'Prof'), ('Rev.', 'Rev'),
@@ -67,7 +67,7 @@ class Locality(models.Model):
 
 
 ADDRESS_TYPES = (
-    (None, 'Unspecified'),
+    (None, 'Type Unspecified'),
     ('Home', 'Home'),
     ('Work', 'Work'),
     ('Main', 'Main'),
@@ -100,7 +100,7 @@ class Address(models.Model):
 
 
 EMAIL_TYPES = (
-    (None, 'Unspecified'),
+    (None, 'Type Unspecified'),
     ('Home', 'Home'),
     ('Work', 'Work'),
     ('Campus', 'Campus'),
@@ -131,9 +131,10 @@ class Email(models.Model):
 
 
 PHONE_TYPES = (
-    (None, 'Unspecified'),
+    (None, 'Type Unspecified'),
     ('Home', 'Home'),
     ('Work', 'Work'),
+    ('Mobile', 'Mobile'),
     ('Main', 'Main'),
     ('A/H', 'After Hours'),
     ('Campus', 'Campus'),

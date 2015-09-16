@@ -1,28 +1,32 @@
+.noborder {
+    border: 0;
+}
+
+.text-large {
+    font-size: 150%;
+}
 
 .errorlist {
     color: darkred;
 }
 
 .toolbar {
-    height: 20px;
+    height: 25px;
     padding: 2px;
     margin: 0;
     background-color: lightblue;
 }
 
-.contact-list {
-    background: #f4f4f8;
-    padding-top: 3px;
-    padding-bottom: 3px;
-}
-
-.contact-list:hover {
-    background: #f0f0f8;
+.compact {
+    border: 0;
+    margin: 0;
+    padding: 0;
 }
 
 .contact-detail {
+    background-color: white;
     outline: 1px solid lightgrey;
-    padding: 0;
+    padding: 0 0 10px;
     margin: 0 0 4px;
 }
 

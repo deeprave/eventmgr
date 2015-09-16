@@ -1,0 +1,14 @@
+{% load bootstrap3 %}
+<form method="post" role="form">
+    {% csrf_token %}
+    <fieldset>
+    {{ form.management_form }}
+    {% for subform in form %}
+        <br><hr>
+        {% bootstrap_form subform show_label=False show_help=False %}
+    {% endfor %}
+    </fieldset>
+    <div class="pull-right">
+        {% buttons submit=' Save Changes ' %}{% endbuttons %}
+    </div>
+</form>

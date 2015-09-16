@@ -1,4 +1,4 @@
-{% load staticfiles %}<!DOCTYPE html>
+{% load staticfiles %}{% load bootstrap3 %}<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
@@ -13,9 +13,7 @@
     <title>{% block title %}{% endblock title %}</title>
 
     <!-- bootstrap: Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https:{% bootstrap_css_url %}" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -41,14 +39,13 @@
 
     </div> <!-- /container -->
 
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <!-- Bootstrap JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https:{% bootstrap_jquery_url %}"></script>
+    <script src="https:{% bootstrap_javascript_url %}"></script>
 
+    {% if user.is_authenticated %}
     <script>
     // Set active class on navigation item depending on page url
-    $('#navbar ul.navbar-nav li').each(function() {
+    $('ul.navbar-nav li').each(function() {
       if ($(this).find('a').attr('href') === window.location.pathname) {
         $(this).addClass('active');
       } else {
@@ -56,10 +53,10 @@
       }
     });
     </script>
+    {% endif %}
 
     {% block javascript %}
-      <script src="{% static 'js/scripts.js' %}"></script>
-    {% endblock javascript %}
+    {% endblock %}
 
   </body>
 </html>

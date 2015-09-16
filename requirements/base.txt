@@ -1,0 +1,7 @@
+Django==1.8.4
+dj-database-url>=0.3.0
+whitenoise>=1.0.6
+begins==0.9
+django-nap==0.14.6ß
+django-filter==0.11.0
+django-bootstrap3==6.2.2

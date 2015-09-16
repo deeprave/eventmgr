@@ -2,19 +2,7 @@ from django.forms import models, inlineformset_factory
 from .models import Contact, Address, Email, PhoneNumber
 
 
-class BootstrapForm(models.ModelForm):
-
-    def __init__(self, *args, **kwargs):
-        """
-        This is an ugly hack, but it works;
-        way better than adding widgets for every field!
-        """
-        super().__init__(*args, **kwargs)
-        for fieldname in self.fields:
-            self.fields[fieldname].widget.attrs.update({'class': 'form-control'})
-
-
-class ContactForm(BootstrapForm):
+class ContactForm(models.ModelForm):
 
     class Meta:
         model = Contact
@@ -30,7 +18,7 @@ class ContactForm(BootstrapForm):
         }
 
 
-class AddressForm(BootstrapForm):
+class AddressForm(models.ModelForm):
 
     class Meta:
         model = Address
@@ -51,7 +39,7 @@ class AddressForm(BootstrapForm):
 ContactAddressFormSet = inlineformset_factory(Contact, Address, form=AddressForm)
 
 
-class EmailForm(BootstrapForm):
+class EmailForm(models.ModelForm):
 
     class Meta:
         model = Email
@@ -69,7 +57,7 @@ class EmailForm(BootstrapForm):
 ContactEmailFormSet = inlineformset_factory(Contact, Email, form=EmailForm)
 
 
-class PhoneForm(BootstrapForm):
+class PhoneForm(models.ModelForm):
 
     class Meta:
         model = PhoneNumber

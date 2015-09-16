@@ -14,7 +14,6 @@ class TestApi(TestCase):
         self.assertTrue(self.client.login(username=self.USERNAME, password=self.PASSWORD))
         return user
 
-
     def test_country_list(self):
         response = self.client.get('/contacts/api/country/')
         # Check to make sure our auth wrapper works

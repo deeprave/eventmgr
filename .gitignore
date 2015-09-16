@@ -106,3 +106,6 @@ db.sqlite3
 
 # icon editor project
 *.iconsproj
+
+# dont version control collected static files
+/staticfiles/*

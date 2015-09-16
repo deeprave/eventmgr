@@ -40,6 +40,7 @@ class ContactDeleteView(SuccessMessageMixin, mixins.DeleteViewLogin):
 class ContactAddressView(mixins.UpdateViewLogin):
     model = models.Contact
     form_class = forms.ContactAddressFormSet
+    template_name = 'contacts/address_form.html'
     success_url = reverse_lazy('contacts')
 
     def get_success_url(self):
@@ -49,6 +50,7 @@ class ContactAddressView(mixins.UpdateViewLogin):
 class ContactPhoneView(mixins.UpdateViewLogin):
     model = models.Contact
     form_class = forms.ContactPhoneFormSet
+    template_name = 'contacts/phonenumber_form.html'
     success_url = reverse_lazy('contacts')
 
     def get_success_url(self):
@@ -58,6 +60,7 @@ class ContactPhoneView(mixins.UpdateViewLogin):
 class ContactEmailView(mixins.UpdateViewLogin):
     model = models.Contact
     form_class = forms.ContactEmailFormSet
+    template_name = 'contacts/email_form.html'
     success_url = reverse_lazy('contacts')
 
     def get_success_url(self):

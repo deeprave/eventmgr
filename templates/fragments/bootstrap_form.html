@@ -1,0 +1,13 @@
+{% load bootstrap3 %}
+<form method="post" role="form">
+    {% csrf_token %}
+    <fieldset>
+    {% if title %}
+        <legend>{{ title }}</legend>
+    {% endif %}
+        {% bootstrap_form form show_label=False %}
+    </fieldset>
+    <div class="pull-right">
+        {% buttons submit=' Save Changes ' %}{% endbuttons %}
+    </div>
+</form>

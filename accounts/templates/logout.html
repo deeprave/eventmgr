@@ -2,17 +2,23 @@
 
 {% block content %}
 
-    <div class="container-full">
-        <div class="row">
-            <div class="col-lg-12 text-center v-center">
-                 <h1 class="">Event Manager</h1>
+    <div class="row">
 
-                <p class="lead">You have been logged out</p>
-
-                <p>Click <a href="{% url 'home' %}">here</a> to log in again</p>
-
-            </div>
+        <div class="text-center">
+            <h1>Event Manager</h1>
+            <p class="lead">You have been logged out</p>
         </div>
+
+        <div class="col-sm-offset-4 col-sm-4">
+            <a href="{% url 'home' %}">
+                <div class="panel panel-default text-center v-center">
+                    <div class="panel-footer">
+                    Click here to log in again
+                    </div>
+                </div>
+            </a>
+        </div>
+
     </div>
 
 {% endblock %}
