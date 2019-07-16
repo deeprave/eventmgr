@@ -81,6 +81,7 @@ docs/_build
 env
 env*
 venv
+.venv
 
 # intellij/pycharm
 .idea
